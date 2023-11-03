@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="selectTopInterest">
+		SELECT I.POST_NO,TITLE,POST_DATE
+		FROM INTEREST_POST I
+		JOIN POST P ON(I.POST_NO = P.POST_NO)
+		LEFT JOIN FOLDER F ON (F.FOLDER_NO = I.FOLDER_NO)
+		WHERE I.FOLDER_NO IS NULL
+		AND I.MEMBER_NO=?
+	</entry>
+	<entry key="selectSubInterest">
+		SELECT I.POST_NO,TITLE,POST_DATE
+		FROM INTEREST_POST I
+		JOIN POST P ON(I.POST_NO = P.POST_NO)
+		LEFT JOIN FOLDER F ON (F.FOLDER_NO = I.FOLDER_NO)
+		WHERE I.FOLDER_NO = ?
+		AND I.MEMBER_NO= ?
+	</entry>
+	
+	<entry key="selectBackInterest">
+		SELECT I.POST_NO,TITLE,POST_DATE
+		FROM INTEREST_POST I
+		JOIN POST P ON(I.POST_NO = P.POST_NO)
+		LEFT JOIN FOLDER F ON (F.FOLDER_NO = I.FOLDER_NO)
+		WHERE NVL(I.FOLDER_NO,0) = (SELECT NVL(UP_FOLDER_NO,0) UP_FOLDER_NO
+                            FROM FOLDER
+                            WHERE FOLDER_NO = ?)
+		AND I.MEMBER_NO = ?
+	</entry>
+	
+</properties>
+
+
+
