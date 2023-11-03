@@ -1,4 +1,4 @@
-package com.gz.mypage.like.controller;
+package com.gz.mypage.myComment.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,27 +10,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.gz.mypage.like.model.service.LikeService;
-import com.gz.mypage.like.model.vo.Like;
+import com.gz.mypage.myComment.model.service.MyCommentService;
+import com.gz.mypage.myComment.model.vo.MyComment;
 
 
-@WebServlet("/likeList.ll")
-public class LikeListController extends HttpServlet {
+//마이페이지에서 접근할 controller. 내가 쓴 댓글 관련 작업
+@WebServlet("/myCommentList.my")
+public class MyCommentListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
 
-	public LikeListController() {
-		super();
-	}
+    public MyCommentListController() {
+        super();
+        
+    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int mno = Integer.parseInt(request.getParameter("mno"));
-
-
-
-		// 게시글 목록 조회하기
-		ArrayList<Like> list = new LikeService().selectList(mno);
+		
+		ArrayList<MyComment> list = new MyCommentService().selectMyCommentList(mno);
 		if(list != null) {
 			//응답 
 			response.setContentType("json/application; charset=UTF-8"); //한번에 처리
@@ -40,14 +38,11 @@ public class LikeListController extends HttpServlet {
 			request.setAttribute("errorMsg", "폴더 에러");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
-		 
-		 
-
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
 	}
 
 }
