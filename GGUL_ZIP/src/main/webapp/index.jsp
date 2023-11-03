@@ -8,6 +8,6 @@
 </head>
 <body>
 	<%@ include file="views/common/menubar.jsp" %>
-	<a href="${pageContext.request.contextPath}/myPage.me">마이페이지</a>
+
 </body>
 </html>

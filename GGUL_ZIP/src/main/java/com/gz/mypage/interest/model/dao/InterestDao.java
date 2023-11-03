@@ -16,7 +16,7 @@ public class InterestDao {
 	private Properties prop = new Properties();
 	
 	public InterestDao() {
-		String filePath = InterestDao.class.getResource("/db/sql/my-interest-mapper.xml").getPath();
+		String filePath = InterestDao.class.getResource("/db/sql/mypage-mapper.xml").getPath();
 		try {
 			prop.loadFromXML(new FileInputStream(filePath));
 		} catch (IOException e) {

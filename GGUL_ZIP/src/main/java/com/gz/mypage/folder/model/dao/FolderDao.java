@@ -16,7 +16,7 @@ public class FolderDao {
 	private Properties prop = new Properties();
 	
 	public FolderDao() {
-		String filePath = FolderDao.class.getResource("/db/sql/folder-mapper.xml").getPath();
+		String filePath = FolderDao.class.getResource("/db/sql/mypage-mapper.xml").getPath();
 		try {
 			prop.loadFromXML(new FileInputStream(filePath));
 		} catch (IOException e) {
