@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.gz.admin.model.dao.AdminDao;
-import com.gz.member.model.vo.Member;
+import com.gz.admin.model.vo.Member;
 import com.gz.common.JDBCTemplate;
 import com.gz.common.model.vo.SelectPageInfo;
 

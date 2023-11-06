@@ -1,4 +1,4 @@
-<%@page import="com.gz.member.model.vo.Member"%>
+<%@page import="com.gz.admin.model.vo.Member"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -396,70 +396,71 @@
               <div class="card recent-sales overflow-auto">
                 <div class="card-body">
                   <h5 class="card-title">회원정보 조회 <span>| Today</span></h5>
-                  <table class="table table-borderless datatable">
-                    <thead>
-                      <tr style="text-align: center;">
-                        <th scope="col" width="60px">번호</th>
-                        <th scope="col">아이디</th>
-                        <th scope="col">이름</th>
-                        <th scope="col">닉네임</th>
-                        <th scope="col">이메일</th>
-                        <th scope="col">회원<br>등급</th>
-                        <th scope="col">가입일</th>
-                        <th scope="col">계정<br>상태</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    <c:choose>
-                	<c:when test="${empty list}">
-                		<tr>
-                			<td colspan='7'>게시글 없습니다.</td>
-                		</tr>
-                	</c:when>
-                	<c:otherwise>
-                        <c:forEach items="${list}" var="m">
-                      <tr style="text-align: center;">
-                        <th  name="memberNo">${m.memberNo }</th>
-                        <td>${m.memberId }</td>
-                        <td><a href="#" class="text-primary">${m.memberName}</a></td>
-                        <td>${m.nickname }</td>
-                        <td>${m.email }</td>
-                        <td><select>
-                          <option id="grade" name="grade" value="member">
-                            ${m.grade }
-                          </option>
-                          <option>
-                             <c:choose>
-                          	<c:when test="${m.grade == '관리자'}">
-                          			일반회원
-                          	</c:when>
-                          	<c:otherwise>
-                          		관리자
-                          	</c:otherwise>
-                          </c:choose>
-                          </option>
-                        </select></td>
-                        <td>${m.enrolldate }</td>
-                        <td><select id="status">
-                          <option id="status" name="status" value="status">${m.status}</option>
-                          <option>
-                          <c:choose>
-                          	<c:when test="${m.status == 'Y' }">
-                          		N
-                          	</c:when>
-                          	<c:otherwise>
-                          		Y
-                          	</c:otherwise>
-                          </c:choose>
-                          </option>
-                        </select></td>
-                      </tr>
-                        </c:forEach>
-                         </c:otherwise>
-                         </c:choose>
-                    </tbody>
-                  </table>
-                  <!-- 페이징바 -->
+							<table class="table table-borderless datatable">
+								<thead>
+									<tr style="text-align: center;">
+										<th scope="col" width="60px">번호</th>
+										<th scope="col">아이디</th>
+										<th scope="col">이름</th>
+										<th scope="col">닉네임</th>
+										<th scope="col">이메일</th>
+										<th scope="col">회원<br>등급</th>
+										<th scope="col">가입일</th>
+										<th scope="col">계정<br>상태</th>
+										<th scope="col">수정</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:choose>
+										<c:when test="${empty list}">
+											<tr>
+												<td colspan='9' align="center">사용자가 없습니다.</td>
+											</tr>
+										</c:when>
+										<c:otherwise>
+											<c:forEach items="${list}" var="m">
+												<tr style="text-align: center;">
+													<td>${m.memberNo}</td>
+													<td>${m.memberId}</td>
+													<td>${m.memberName}</td>
+													<td>${m.nickname}</td>
+													<td>${m.email}</td>
+													<td><select name="grade">
+															<option id="grade" value="member">${m.grade}</option>
+															<option>
+																<c:choose>
+																	<c:when test="${m.grade == '관리자'}">일반회원</c:when>
+																	<c:otherwise>관리자</c:otherwise>
+																</c:choose>
+															</option>
+													</select></td>
+													<td>${m.enrolldate}</td>
+													<td><select name="status">
+															<option id="status" value="status">${m.status}</option>
+															<option>
+																<c:choose>
+																	<c:when test="${m.status == 'Y' }">N</c:when>
+																	<c:otherwise>Y</c:otherwise>
+																</c:choose>
+															</option>
+													</select></td>
+													<td><input type="button" value="수정" onclick="updateAdmin(this);"></td>
+												</tr>
+											</c:forEach>
+										</c:otherwise>
+									</c:choose>
+								</tbody>
+							</table>
+							<!-- 수정 스크립트 -->
+							<script>
+								function updateAdmin(upAdmin){
+									//var memberNo = $(upAdmin).parent().siblings().eq(0).children().val();
+									console.log($(upAdmin).closest('tr').find('td:first-child').text()); //첫번째 MEMBER 번호
+									}
+								
+							</script>
+							
+					<!-- 페이징바 -->
                     <div align="center">
                     	<c:choose>
                     		<c:when test="${pi.currentPage eq 1}">

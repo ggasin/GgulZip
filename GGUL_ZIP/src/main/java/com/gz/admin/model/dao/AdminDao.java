@@ -10,7 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import com.gz.member.model.vo.Member;
+import com.gz.admin.model.vo.Member;
 import com.gz.common.JDBCTemplate;
 import com.gz.common.model.vo.SelectPageInfo;
 

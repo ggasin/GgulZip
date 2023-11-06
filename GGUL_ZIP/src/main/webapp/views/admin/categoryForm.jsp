@@ -1,11 +1,13 @@
-
+<%@page import="com.gz.admin.model.vo.Member"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="com.gz.member.model.vo.Member"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
+<%
+	String alertMsg = (String)session.getAttribute("alertMsg");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -367,6 +369,7 @@
 					<div class="card-body">
 						<table class="table table-borderless datatable">
 							<thead>
+							
 								<tr style="text-align: center;">
 									<th scope="col">카테고리 번호</th>
 									<th scope="col">카테고리 이름</th>
@@ -382,21 +385,78 @@
 								</c:choose>
 								<c:forEach items="${clist}" var="c">
 									<tr style="text-align: center">
-										<td><input type="text" value="${c.categoryNo}" style="width:50px;text-align:center;" disabled></td>
-										<td><input type="text" value="${c.categoryName}" style="width:130px;text-align:center;"></td>
-										<td><button>수정</button></td>
-										<td><button>삭제</button></td>
+										<td><input type="text" name="no2" value="${c.categoryNo}" style="width:50px;text-align:center;" readonly></td>
+										<td><input type="text" name="name2" value="${c.categoryName}" style="width:130px;text-align:center;"></td>
+										<td>
+											<input type="button" onclick="updateCategory(this);" value="수정">
+											</td> 
+										<td><input type="button" onclick="deleteCategory(this);" value="삭제"></td>
 									</tr>
 								</c:forEach>
 							</tbody>
-								<tr style="text-align: center;">
-									<form action="${contextPath}/insertCategory.ad" method="post">
-										<td><input type="text" name="no" placeholder="No" style="width:50px;text-align:center;"></td>
+								<form action="../${contextPath}/insertCategory.ad" method="post">
+									<tr style="text-align: center;">
+										<td><input type="text" name="no"  placeholder="No" style="width:50px;text-align:center;"></td>
 										<td><input type="text" name="name" placeholder="카테고리 이름" style="width:130px;text-align:center;"></td>
 										<td><button type="submit">추가</button></td>
-									</form>
-								</tr>
+									</tr>
+								</form>	
 						</table>
+						<script>
+							//카테고리 수정 function
+							function updateCategory(uCategory){
+								var updateNo = $(uCategory).parent().siblings().eq(0).children().val();
+								var updateName = $(uCategory).parent().siblings().eq(1).children().val();
+								
+								let f = document.createElement('form');
+								
+								let obj;
+								obj = document.createElement('input');
+								obj.setAttribute('type','hidden');
+								obj.setAttribute('name','no2');
+								obj.setAttribute('value',updateNo);
+								
+								let obj2;
+								obj2 = document.createElement('input');
+								obj2.setAttribute('type','hidden');
+								obj2.setAttribute('name','name2');
+								obj2.setAttribute('value',updateName);
+								
+								f.appendChild(obj);
+								f.appendChild(obj2);
+								f.setAttribute('method','post');
+								f.setAttribute('action','updateCategory.ad');
+								document.body.appendChild(f);
+								f.submit();
+							}
+							
+							//카테고리 삭제 function
+							function deleteCategory(dCategory){
+								var deleteNo = $(dCategory).parent().siblings().eq(0).children().val();
+								var deleteName = $(dCategory).parent().siblings().eq(1).children().val();
+								
+								let f = document.createElement('form');
+								
+								let obj;
+								obj = document.createElement('input');
+								obj.setAttribute('type','hidden');
+								obj.setAttribute('name','no2');
+								obj.setAttribute('value',deleteNo);
+								
+								let obj2;
+								obj2 = document.createElement('input');
+								obj2.setAttribute('type','hidden');
+								obj2.setAttribute('name','name2');
+								obj2.setAttribute('value',deleteName);
+								
+								f.appendChild(obj);
+								f.appendChild(obj2);
+								f.setAttribute('method','post');
+								f.setAttribute('action','deleteCategory.ad');
+								document.body.appendChild(f);
+								f.submit();															
+							}
+						</script>
 					</div>
 				</div>
 			</div>
