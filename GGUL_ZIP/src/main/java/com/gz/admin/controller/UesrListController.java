@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.gz.admin.model.service.AdminService;
-import com.gz.admin.model.vo.Member;
+import com.gz.member.model.vo.Member;
 import com.gz.common.model.vo.SelectPageInfo;
 
 /**
