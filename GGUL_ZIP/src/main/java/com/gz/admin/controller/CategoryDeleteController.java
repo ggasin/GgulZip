@@ -9,19 +9,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.gz.admin.model.service.CategoryService;
-import com.gz.admin.model.vo.Category;
 
 /**
- * Servlet implementation class CategoryInsertController
+ * Servlet implementation class CategoryDeleteController
  */
-@WebServlet("/insertCategory.ad")
-public class CategoryInsertController extends HttpServlet {
+@WebServlet("/deleteCategory.ad")
+public class CategoryDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CategoryInsertController() {
+    public CategoryDeleteController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,7 +29,8 @@ public class CategoryInsertController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("views/admin/categoryForm.jsp").forward(request, response);
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -38,23 +38,23 @@ public class CategoryInsertController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		int no = Integer.parseInt(request.getParameter("no"));
-		String name = request.getParameter("name");
 		
-		Category c = new Category();
-		c.setCategoryNo(no);
-		c.setCategoryName(name);
+		String categoryName = request.getParameter("name2");
+		int categoryNo = Integer.parseInt(request.getParameter("no2"));
 		
-		int result = new CategoryService().insertCategpry(c);
+		int result = new CategoryService().deleteCategory(categoryName,categoryNo);
 		
-		HttpSession session = request.getSession();
+		System.out.println(categoryName);
+		System.out.println(categoryNo);
+		
 		if(result>0) {
-			request.setAttribute("alertMsg", "카테고리 추가 성공");
+			HttpSession session = request.getSession();
+			session.setAttribute("alertMsg", "카테고리 삭제 성공 !");
 			response.sendRedirect(request.getContextPath()+"/category.ad");
 		}else {
-			session.setAttribute("alertMsg","카테고리 추가 실패");
-			response.sendRedirect(request.getContextPath()+"/category.ad");
+			request.setAttribute("errorMsg", "카테고리 삭제 실패 !");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
-		response.getWriter().print(c);
 	}
+
 }

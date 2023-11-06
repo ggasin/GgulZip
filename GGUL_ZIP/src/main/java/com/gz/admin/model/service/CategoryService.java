@@ -31,5 +31,50 @@ public class CategoryService {
 		}
 		return result;
 	}
-	
+
+	//카테고리 수정
+	public Category updateCategory(Category c) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new CategoryDao().updateCategory(conn,c);
+		
+		Category updateCat = null;
+		
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+			updateCat = new CategoryDao().selectClist2(conn,c.getCategoryNo());
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return updateCat;
+	}
+
+	//카테고리 삭제
+	public int deleteCategory(String categoryName, int categoryNo) {
+		Connection conn = JDBCTemplate.getConnection();
+		
+		int result = new CategoryDao().deleteCategory(conn,categoryName,categoryNo);
+		
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
 }
+
+
+
+
+
+
+
+
+
+
