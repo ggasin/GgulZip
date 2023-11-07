@@ -61,6 +61,7 @@ public class AdminDao {
 		ArrayList<Member> list = new ArrayList<>();
 		ResultSet rset = null;
 		PreparedStatement pstmt = null;
+		
 		String sql = prop.getProperty("selectUserList");
 		
 		int startRow = (pi.getCurrentPage()-1)*pi.getSelectLimit()+1;
@@ -92,5 +93,60 @@ public class AdminDao {
 			JDBCTemplate.close(pstmt);
 		}
 		return list;
+	}
+
+	//회원 grade, status 수정
+	public int updateMember(Connection conn, Member m) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, m.getGrade());
+			pstmt.setString(2, m.getStatus());
+			pstmt.setInt(3, m.getMemberNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		
+		return result;
+	}
+
+	//회원 grade, status 수정 후 select
+	public Member selectUserList2(Connection conn, int memberNo) {
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		Member m = null;
+		String sql = prop.getProperty("selectUserList2");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, memberNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				m = new Member(rset.getInt("MEMBER_NO")
+							  ,rset.getString("MEMBER_ID")
+							  ,rset.getString("MEMBER_NAME")
+							  ,rset.getString("MEMBER_NICKNAME")
+ 							  ,rset.getString("MEMBER_EMAIL")
+   							  ,rset.getDate("MEMBER_ENROLL_DATE")
+							  ,rset.getString("MEMBER_GRADE")
+							  ,rset.getString("STATUS"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return m;
 	}
 }

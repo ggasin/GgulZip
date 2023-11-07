@@ -47,12 +47,12 @@ public class CategoryUpdateController extends HttpServlet {
 		Category updateCat = new CategoryService().updateCategory(c);
 		
 		if(updateCat == null) {
-			request.setAttribute("errorMsg", "카테고리 수정 실패 !");
+			request.setAttribute("errorMsg", categoryName+"카테고리 수정 실패 !");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}else {
 			HttpSession session = request.getSession();
 			
-			session.setAttribute("alertMsg", categoryName+"카테고리 수정 완료 !");
+			session.setAttribute("alertMsg", categoryName+" 카테고리 수정 완료 !");
 			response.sendRedirect(request.getContextPath()+"/category.ad");
 		}
 	}

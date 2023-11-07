@@ -47,13 +47,13 @@ public class CategoryDeleteController extends HttpServlet {
 		System.out.println(categoryName);
 		System.out.println(categoryNo);
 		
+		HttpSession session = request.getSession();
 		if(result>0) {
-			HttpSession session = request.getSession();
-			session.setAttribute("alertMsg", "카테고리 삭제 성공 !");
+			session.setAttribute("alertMsg", "카테고리 삭제 성공.");
 			response.sendRedirect(request.getContextPath()+"/category.ad");
 		}else {
-			request.setAttribute("errorMsg", "카테고리 삭제 실패 !");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+			session.setAttribute("alertMsg", "게시글이 있는경우 카테고리 삭제할수없습니다.");
+			response.sendRedirect(request.getContextPath()+"/category.ad");
 		}
 	}
 

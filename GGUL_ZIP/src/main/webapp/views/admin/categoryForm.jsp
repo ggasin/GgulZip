@@ -5,9 +5,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%
-	String alertMsg = (String)session.getAttribute("alertMsg");
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,7 +32,7 @@
 
 </head>
 <body>
-	<%@include file="../common/menubar.jsp"%>
+	<%@include file="../common/menubar.jsp" %>
 	<!-- ======= Header ======= -->
 	<header id="header" class="header fixed-top d-flex align-items-center">
 

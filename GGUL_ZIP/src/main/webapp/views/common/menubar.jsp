@@ -139,7 +139,8 @@ if (cookies != null) {
 		<%
 		if (loginMember == null) {
 		%>
-		<form action="<%=contextPath%>/login.me" id="login-form" method="post">
+		<form action="<%=contextPath%>/login.me" id="login-form"
+			method="post">
 			<table>
 				<tr>
 					<th>아이디 :</th>
@@ -220,10 +221,8 @@ if (cookies != null) {
 			<a href="${pageContext.request.contextPath}/list.ph">사진게시판</a>
 		</div>
 		<div class="menu">
-			<a href="${contextPath}/selectUser.ad?currentPage=1">1</a>
-		</div>
-		<div>
-			<a href="${contextPath}/category.ad">2</a>
+			<a href="${contextPath}/category.ad">카테고리수정</a>
+			<a href="${contextPath}/selectUser.ad?currentPage=1">관리자페이지</a>
 		</div>
 	</div>
 
