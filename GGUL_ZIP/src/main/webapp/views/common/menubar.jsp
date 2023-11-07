@@ -177,6 +177,92 @@ if (cookies != null) {
         	function findidPage() {
         		location.href="<%=contextPath%>/findId.me";
         	}
+	<!--jstl 방식으로 contextPath를 다시 선언해주어야 jstl방식으로 contextPath를 이용해야한다. -->
+	<c:set var="contextPath" value="${pageContext.request.contextPath }" />
+	<script>
+		// script 내부에도 스크립틀릿과 같은 jsp요소를 쓸 수 있다.
+		// 주의사항 : jsp가 먼저 읽히기 때문에 javascript 값을 java에 담을 수는 없다 (반대는 가능)
+			
+		var msg = '<%=alertMsg%>'; //이건 가능 (문자열 처리해주기[값자체로 나옴])
+		
+		//안되는것 : 자바스크립트에서 작성한것을 jsp(java)로 넘기기 
+		/*
+		var a = 10;
+		
+		<%//int ab = a;%>
+		*/
+		if(msg != 'null'){ //alertMsg가 null인경우 자바스크립트에 담길때 문자열이 되기때문에
+						   //비교도 문자열로 비교해야함.
+			alert(msg);
+			//alertMsg를 session에서 지워주지않으면 계속 메세지가 나오기때문에 한번 띄우고 지우기 
+			<%session.removeAttribute("alertMsg");%>
+			
+		}
+		
+		$(function(){
+			
+			//쿠키 아이디값 가져오기
+			
+			var saveId = "<%=saveId%>";
+			
+			if(saveId!=""){
+				$("input[name=memberId]").val(saveId);
+				$("input[name=saveId]").attr("checked",true);
+			}
+			
+		});
+		
+		
+	</script>
+
+
+	<h1 align="center">Welcome Web Project</h1>
+
+	<!--로그인 영역-->
+	<div class="login-area">
+		<!--로그인 전 후 화면 나누기 -->
+		<!--로그인 전 -->
+		<%
+		if (loginMember == null) {
+		%>
+		<form action="<%=contextPath%>/login.me" id="login-form" method="post">
+			<table>
+				<tr>
+					<th>아이디 :</th>
+					<td><input type="text" name="memberId" required></td>
+				</tr>
+				<tr>
+					<th>비밀번호 :</th>
+					<td><input type="password" name="memberPwd" required></td>
+				</tr>
+				<tr>
+					<td colspan="2">아이디저장 : <input type="checkbox" name="saveId">
+					</td>
+				</tr>
+				<tr>
+					<th colspan="2">
+						<button type="submit">로그인</button>
+						<button type="button" onclick="enrollPage();">회원가입</button>
+						<button type="button" onclick="findidPage();">아이디찾기</button>
+						<button type="button" onclick="findpwPage();">비밀번호찾기</button>
+					</th>
+				</tr>
+
+			</table>
+		</form>
+		<script>
+        	function enrollPage(){
+        		//아래와 같이 작성하면 디렉토리 구조가 노출이 되니 보안에 취약할 수 있다. 
+        		//location.href="/jsp/views/member/memberEnrollForm.jsp";
+        		//때문에 간단한 페이지 이동요청도 servlet을 거쳐서 요청에대한 응답페이지를 돌려받자.
+        		console.log("회원가입 클릭");
+        		location.href="<%=contextPath%>/enrollForm.me";
+        		
+        	}
+        	
+        	function findidPage() {
+        		location.href="<%=contextPath%>/findId.me";
+        	}
         
         	function findpwPage() {
         		location.href="<%=contextPath%>/findPwd.me";
