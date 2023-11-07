@@ -91,7 +91,6 @@ if (cookies != null) {
 
 </head>
 <body>
-	
 	<!--jstl 방식으로 contextPath를 다시 선언해주어야 jstl방식으로 contextPath를 이용해야한다. -->
 	<c:set var="contextPath" value="${pageContext.request.contextPath }" />
 	<script>
@@ -140,7 +139,8 @@ if (cookies != null) {
 		<%
 		if (loginMember == null) {
 		%>
-		<form action="<%=contextPath%>/login.me" id="login-form" method="post">
+		<form action="<%=contextPath%>/login.me" id="login-form"
+			method="post">
 			<table>
 				<tr>
 					<th>아이디 :</th>
@@ -218,8 +218,8 @@ if (cookies != null) {
 			<a href="${pageContext.request.contextPath}/list.no">공지사항</a>
 		</div>
 		<div class="menu">
-				<a href="${pageContext.request.contextPath}/list.ph">사진게시판</a>
-			</div>
+			<a href="${pageContext.request.contextPath}/list.ph">사진게시판</a>
+		</div>
 		<div class="menu">
 			<a href="${contextPath}/category.ad">카테고리수정</a>
 			<a href="${contextPath}/selectUser.ad?currentPage=1">관리자페이지</a>
