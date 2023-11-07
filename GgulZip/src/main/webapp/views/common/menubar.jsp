@@ -335,7 +335,11 @@ if (cookies != null) {
 	  </div>
 	  <div class="nav_item">
 			<a href="${contextPath}/disable.ad">정지회원</a>
+		</div>
+		 <div class="nav_item">
 			<a href="${contextPath}/category.ad">카테고리수정</a>
+		</div>
+		 <div class="nav_item">
 			<a href="${contextPath}/selectUser.ad?currentPage=1">관리자페이지</a>
 		</div>
 	  
