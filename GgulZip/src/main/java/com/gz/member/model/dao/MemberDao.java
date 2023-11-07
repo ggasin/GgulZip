@@ -47,7 +47,7 @@ public class MemberDao {
 			pstmt.setString(3, m.getMemberName());
 			pstmt.setString(4, m.getNickname());
 			pstmt.setString(5, m.getEmail());
-			pstmt.setString(6, m.getImageNo());
+
 			
 			result = pstmt.executeUpdate();
 			
@@ -85,7 +85,6 @@ public class MemberDao {
 						      ,rset.getString("MEMBER_NAME")
 						      ,rset.getString("MEMBER_NICKNAME")
 						      ,rset.getString("MEMBER_EMAIL")
-						      ,rset.getString("IMAGE_NO")
 						      ,rset.getDate("MEMBER_ENROLL_DATE")
 						      ,rset.getString("MEMBER_GRADE")
 						      ,rset.getString("STATUS"));
