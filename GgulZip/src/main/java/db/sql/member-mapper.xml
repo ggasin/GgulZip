@@ -7,15 +7,14 @@
 						  ,MEMBER_PWD
 						  ,MEMBER_NAME
 						  ,MEMBER_NICKNAME
-						  ,MEMBER_EMAIL
-						  ,IMAGE_NO)
+						  ,MEMBER_EMAIL)
 				  VALUES(SEQ_MNO.NEXTVAL
 				  		,?
 				  		,?
 				  		,?
 				  		,?
 				  		,?
-				  		,?)	
+				  		)	
 	</entry>
 	<entry key="loginMember">
 		SELECT *
