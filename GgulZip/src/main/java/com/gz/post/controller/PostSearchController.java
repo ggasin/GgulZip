@@ -17,7 +17,7 @@ import com.gz.post.model.vo.Post;
 /**
  * Servlet implementation class BoardSearchController
  */
-@WebServlet("/pSearch.po")
+@WebServlet("/pSearch.bo")
 public class PostSearchController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -35,7 +35,7 @@ public class PostSearchController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<Post> listPost;
 		String searchCondition = request.getParameter("searchCondition"); // 검색 조건
-		String searchValue = request.getParameter("searchValue"); // 검색값
+		String searchValue = request.getParameter("searchValue"); // 검색 값
 		// 검색 결과
 		listPost = new PostService().selectPost(searchCondition, searchValue);
 		

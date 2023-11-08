@@ -29,7 +29,23 @@ public class Post {
     	super();
     }
     
-    public Post(int postNo, int memberNo, int categoryNo, String title, String content, int count, String nickname,
+    
+    
+    public Post(int postNo, String title, String content, int count, String nickname, Date postDate,
+			String categoryName) {
+		super();
+		this.postNo = postNo;
+		this.title = title;
+		this.content = content;
+		this.count = count;
+		this.nickname = nickname;
+		this.postDate = postDate;
+		this.categoryName = categoryName;
+	}
+
+
+
+	public Post(int postNo, int memberNo, int categoryNo, String title, String content, int count, String nickname,
             Date postDate, int likeCount, int interestCount, String status, String categoryName, Member member,
             Category category) {
         super();
