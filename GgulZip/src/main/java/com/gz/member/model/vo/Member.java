@@ -18,11 +18,12 @@ public class Member {
 		super();
 	}
 	
-	public Member(int memberNo, String grade, String status) {
+	public Member(int memberNo, String grade, String status, String reason) {
 		super();
 		this.memberNo = memberNo;
 		this.grade = grade;
 		this.status = status;
+		this.reason = reason;
 	}
 
 	public Member(String memberId, String memberPwd, String memberName, String nickname, String email) {
@@ -34,8 +35,9 @@ public class Member {
 		this.email = email;
 	}
 
-	public Member(String memberId, String memberName, String email, Date enrolldate, String reason) {
+	public Member(int memberNo, String memberId, String memberName, String email, Date enrolldate, String reason) {
 		super();
+		this.memberNo = memberNo;
 		this.memberId = memberId;
 		this.memberName = memberName;
 		this.email = email;
@@ -77,7 +79,7 @@ public class Member {
 		this.status = status;
 	}
 
-
+	
 	public int getMemberNo() {
 		return memberNo;
 	}

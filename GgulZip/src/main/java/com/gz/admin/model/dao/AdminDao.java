@@ -10,7 +10,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import com.gz.admin.model.vo.Disable;
 import com.gz.common.JDBCTemplate;
 import com.gz.common.model.vo.PageInfo;
 import com.gz.member.model.vo.Member;
@@ -27,7 +26,6 @@ public class AdminDao {
 			prop.loadFromXML(new FileInputStream(filePath));
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -118,40 +116,7 @@ public class AdminDao {
 		return result;
 	}
 
-	//회원 grade, status 수정 후 select
-	public Member selectUserList2(Connection conn, int memberNo) {
-		ResultSet rset = null;
-		PreparedStatement pstmt = null;
-		Member m = null;
-		String sql = prop.getProperty("selectUserList2");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, memberNo);
-			
-			rset = pstmt.executeQuery();
-			
-			if(rset.next()) {
-				m = new Member(rset.getInt("MEMBER_NO")
-							  ,rset.getString("MEMBER_ID")
-							  ,rset.getString("MEMBER_NAME")
-							  ,rset.getString("MEMBER_NICKNAME")
- 							  ,rset.getString("MEMBER_EMAIL")
-   							  ,rset.getDate("MEMBER_ENROLL_DATE")
-							  ,rset.getString("MEMBER_GRADE")
-							  ,rset.getString("STATUS"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			JDBCTemplate.close(rset);
-			JDBCTemplate.close(pstmt);
-		}
-		return m;
-	}
-	
 	//회원 아이디,이름으로 검색 및 검색결과 조회
-	
 	public ArrayList<Member> selectUserList2(Connection conn, String searchText,String searchField) {
 		
 		ResultSet rset = null;
@@ -205,7 +170,8 @@ public class AdminDao {
 			
 			while(rset.next()) {
 				
-				dlist.add(new Member(rset.getString("MEMBER_ID")
+				dlist.add(new Member(rset.getInt("MEMBER_NO")
+									,rset.getString("MEMBER_ID")
 									,rset.getString("MEMBER_NAME"),
 									rset.getString("MEMBER_EMAIL"),
 									rset.getDate("MEMBER_ENROLL_DATE")
@@ -222,16 +188,15 @@ public class AdminDao {
 	}
 
 	//정지회원 정지사유 업데이트 
-	public int insertDisable(Connection conn, Member d) {
+	public int updateDisable(Connection conn, Member d) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String sql = prop.getProperty("insertDisable");
+		String sql = prop.getProperty("updateDisable");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, d.getReason());
-			pstmt.setString(2, d.getMemberId());
-			System.out.println(d);
+			pstmt.setInt(2, d.getMemberNo());
 			result=pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -240,52 +205,39 @@ public class AdminDao {
 		}
 		return result;
 	}
-	
-	
-	//업데이트 후 조회
-	public Member selectDisable2(Connection conn, String memberId) {
-		
-		ResultSet rset = null;
-		PreparedStatement pstmt = null;
-		String sql = prop.getProperty("selectDisable2");
-		Member d = null;
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, memberId);
-			rset = pstmt.executeQuery();
-			
-			if(rset.next()) {
-				d = new Member(
-						rset.getString("MEMBER_ID")
-						,rset.getString("MEMBER_NAME"),
-						rset.getString("MEMBER_EMAIL"),
-						rset.getDate("MEMBER_ENROLL_DATE")
-						,rset.getString("DISABLE_REASON"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			JDBCTemplate.close(rset);
-			JDBCTemplate.close(pstmt);
-		}
-		return d;
-	}
 
 	//정지회원 테이블에 status n 인 회원 추가하기 DAO
-	public int insertDisable2(Connection conn, Disable dis) {
-
+	public int insertDisable(Connection conn, Member m) {
 		int result = 0;
 		Statement stmt = null;
-		String sql = prop.getProperty("insertDisable2");
+		String sql = prop.getProperty("insertDisable");
 		
 		try {
 			stmt = conn.createStatement();
-			
 			result = stmt.executeUpdate(sql);
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(stmt);
+		}
+		return result;
+	}
+
+	//정지회원 테이블 status y 들어갈 경우 delete
+	public int deleteDisable(Connection conn, Member m) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteDisable");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, m.getMemberNo());
+			result=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			JDBCTemplate.close(pstmt);
 		}
 		return result;
 	}

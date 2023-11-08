@@ -17,7 +17,6 @@ import com.gz.member.model.vo.Member;
 @WebServlet("/update.ad")
 public class UserUpdateAdminController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -43,17 +42,37 @@ public class UserUpdateAdminController extends HttpServlet {
 		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
 		String grade = request.getParameter("grade");
 		String status = request.getParameter("status");
+		String reason = request.getParameter("reason");
+//		Member m = new Member();
+//		//회원번호로 disable 테이블에 memberNo가 있는지 확인 후 있으면 지금 넘겨받은 status랑 확인후 같은지 다른지에 따라 처리하기
+//		int count = new AdminService().selectDisable(memberNo);
+//		
+//		
+//		//정지회원일떄
+//		if(count>0) {
+//			if(status.equals("Y")) {//status 변경되었으면 
+//				
+//			}else {//변경되지않았으면
+//				
+//			}
+//			
+//		}else {//정지회원 아닐떄 
+//			if(status.equals("N")) {//정지되면 
+//				
+//			}
+//		}
+//		
 		
-		Member m = new Member(memberNo,grade,status);
+		Member m = new Member(memberNo,grade,status,reason);
 		
-		Member updateMem = new AdminService().updateMember(m);
+		int result = new AdminService().updateMember(m);
 		
 		HttpSession session = request.getSession();
-		if(updateMem == null) {
-			session.setAttribute("alertMsg", "회원 정보 수정 실패.");
-			response.sendRedirect(request.getContextPath()+"/selectUser.ad?currentPage=1");
+		if(result>0) {
+				session.setAttribute("alertMsg", "회원 정보 수정 성공");
+				response.sendRedirect(request.getContextPath()+"/selectUser.ad?currentPage=1");
 		}else {
-			session.setAttribute("alertMsg", "회원 정보 수정 성공");
+			session.setAttribute("alertMsg", "회원 정보 수정 실패.");
 			response.sendRedirect(request.getContextPath()+"/selectUser.ad?currentPage=1");
 		}
 	}

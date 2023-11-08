@@ -5,17 +5,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@include file="../common/menubar.jsp"%>
 </head>
 <body>
-	<!-- ======= Header ======= -->
+	<%@include file="../common/menubar.jsp"%>
+	<div align="center">
+		<h4>카테고리 관리</h4>
+	</div>
+	<br>
+	<br>
 	<header>
 		<div>
 			<table class="table">
 				<thead>
 					<tr style="text-align: center;">
-						<th scope="col">카테고리 번호</th>
-						<th scope="col">카테고리 이름</th>
+						<th>카테고리 번호</th>
+						<th>카테고리 이름</th>
+						<th> </th>
+						<th> </th>
 					</tr>
 				</thead>
 				<tbody>
@@ -42,70 +48,69 @@
 				</tbody>
 				<form action="../${contextPath}/insertCategory.ad" method="post">
 					<tr style="text-align: center;">
-						<td><input type="text" name="no" placeholder="No"
-							style="width: 50px; text-align: center;"></td>
-						<td><input type="text" name="name" placeholder="카테고리 이름"
-							style="width: 130px; text-align: center;"></td>
+						<td><input type="text" name="no" placeholder="No" style="width: 50px; text-align: center;"></td>
+						<td><input type="text" name="name" placeholder="카테고리 이름" style="width: 130px; text-align: center;"></td>
 						<td><button type="submit">추가</button></td>
+						<td> </td>
 					</tr>
 				</form>
 			</table>
-		<script>
-			//카테고리 수정 function
-			function updateCategory(uCategory){
-				var updateNo = $(uCategory).parent().siblings().eq(0).children().val();
-				var updateName = $(uCategory).parent().siblings().eq(1).children().val();
-				
-				let f = document.createElement('form');
-				
-				let obj;
-				obj = document.createElement('input');
-				obj.setAttribute('type','hidden');
-				obj.setAttribute('name','no2');
-				obj.setAttribute('value',updateNo);
-				
-				let obj2;
-				obj2 = document.createElement('input');
-				obj2.setAttribute('type','hidden');
-				obj2.setAttribute('name','name2');
-				obj2.setAttribute('value',updateName);
-				
-				f.appendChild(obj);
-				f.appendChild(obj2);
-				f.setAttribute('method','post');
-				f.setAttribute('action','updateCategory.ad');
-				document.body.appendChild(f);
-				f.submit();
-			}
-			
-			//카테고리 삭제 function
-			function deleteCategory(dCategory){
-				var deleteNo = $(dCategory).parent().siblings().eq(0).children().val();
-				var deleteName = $(dCategory).parent().siblings().eq(1).children().val();
-				
-				let f = document.createElement('form');
-				
-				let obj;
-				obj = document.createElement('input');
-				obj.setAttribute('type','hidden');
-				obj.setAttribute('name','no2');
-				obj.setAttribute('value',deleteNo);
-				
-				let obj2;
-				obj2 = document.createElement('input');
-				obj2.setAttribute('type','hidden');
-				obj2.setAttribute('name','name2');
-				obj2.setAttribute('value',deleteName);
-				
-				f.appendChild(obj);
-				f.appendChild(obj2);
-				f.setAttribute('method','post');
-				f.setAttribute('action','deleteCategory.ad');
-				document.body.appendChild(f);
-				f.submit();															
-			}
-		</script>
-	</div>
+			<script>
+				//카테고리 수정 function
+				function updateCategory(uCategory) {
+					var updateNo = $(uCategory).parent().siblings().eq(0).children().val();
+					var updateName = $(uCategory).parent().siblings().eq(1).children().val();
+
+					let f = document.createElement('form');
+
+					let obj;
+					obj = document.createElement('input');
+					obj.setAttribute('type', 'hidden');
+					obj.setAttribute('name', 'no2');
+					obj.setAttribute('value', updateNo);
+
+					let obj2;
+					obj2 = document.createElement('input');
+					obj2.setAttribute('type', 'hidden');
+					obj2.setAttribute('name', 'name2');
+					obj2.setAttribute('value', updateName);
+
+					f.appendChild(obj);
+					f.appendChild(obj2);
+					f.setAttribute('method', 'post');
+					f.setAttribute('action', 'updateCategory.ad');
+					document.body.appendChild(f);
+					f.submit();
+				}
+
+				//카테고리 삭제 function
+				function deleteCategory(dCategory) {
+					var deleteNo = $(dCategory).parent().siblings().eq(0).children().val();
+					var deleteName = $(dCategory).parent().siblings().eq(1).children().val();
+
+					let f = document.createElement('form');
+
+					let obj;
+					obj = document.createElement('input');
+					obj.setAttribute('type', 'hidden');
+					obj.setAttribute('name', 'no2');
+					obj.setAttribute('value', deleteNo);
+
+					let obj2;
+					obj2 = document.createElement('input');
+					obj2.setAttribute('type', 'hidden');
+					obj2.setAttribute('name', 'name2');
+					obj2.setAttribute('value', deleteName);
+
+					f.appendChild(obj);
+					f.appendChild(obj2);
+					f.setAttribute('method', 'post');
+					f.setAttribute('action', 'deleteCategory.ad');
+					document.body.appendChild(f);
+					f.submit();
+				}
+			</script>
+		</div>
 	</header>
 </body>
 </html>

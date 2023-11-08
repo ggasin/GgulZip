@@ -5,47 +5,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-<%@include file="../common/menubar.jsp"%>
 </head>
 <body>
-      <!-- 회원정보 검색 후 출력 -->
-	<form action="find.ad" >
-		<select name="searchField" id="search"> <!--  searchField : 검색옵션 -->
+	<%@include file="../common/menubar.jsp"%>
+	<br>
+	<!-- 회원정보 검색 후 출력 -->
+	<form action="find.ad">
+		<select name="searchField" id="search">
+			<!--  searchField : 검색옵션 -->
 			<option value="MEMBER_NAME">회원이름</option>
 			<option value="MEMBER_ID">회원아이디</option>
-		</select>
-		<input type="text" placeholder="검색어 입력" name="searchText">
-	<button type="submit" class="btn btn-success">검색</button>
-
+		</select> <input type="text" placeholder="검색어 입력" name="searchText">
+		<button type="submit" class="btn btn-success">검색</button>
 	</form>
-	
 	<script>
-	
-	//검색후 옵션 고정
-	
-	window.addEventListener('load', function () {
-	    const searchSelect = document.getElementById('search');
-	    const savedOption = localStorage.getItem('searchOption');
+		//검색후 옵션 고정
 
-	    if (savedOption) {
-	      searchSelect.value = savedOption;
-	    }
+		window.addEventListener('load', function() {
+			const searchSelect = document.getElementById('search');
+			const savedOption = localStorage.getItem('searchOption');
 
-	    // 선택 옵션이 변경될 때 로컬 스토리지에 저장
-	    searchSelect.addEventListener('change', function () {
-	      localStorage.setItem('searchOption', searchSelect.value);
-	    });
-	  });
+			if (savedOption) {
+				searchSelect.value = savedOption;
+			}
+
+			// 선택 옵션이 변경될 때 로컬 스토리지에 저장
+			searchSelect.addEventListener('change', function() {
+				localStorage.setItem('searchOption', searchSelect.value);
+			});
+		});
 	</script>
-	<div>
-		<h3 style="text-align: center">회원정보 관리</h3>
+	<div align="center">
+		<h4>사용자 관리</h4>
 	</div>
+	<br>
 	<div>
 		<div>
 			<div>
 				<div>
-				<form action="insertDisable2">
 					<table class="table">
 						<thead>
 							<tr style="text-align: center;">
@@ -56,8 +53,8 @@
 								<th>이메일</th>
 								<th>회원<br>등급</th>
 								<th>가입일</th>
-								<th>계정<br>상태
-								</th>
+								<th>계정<br>상태</th>
+								<th> </th>
 							</tr>
 						</thead>
 						<tbody>
@@ -68,8 +65,8 @@
 									</tr>
 								</c:when>
 								<c:otherwise>
-									<c:forEach items="${list}" var="m">
-										<tr style="text-align: center;">
+									<c:forEach items="${list}" var="m" varStatus="vs">
+										<tr style="text-align: center;" id="${vs.index}">
 											<td>${m.memberNo}</td>
 											<td>${m.memberId}</td>
 											<td>${m.memberName}</td>
@@ -86,7 +83,7 @@
 											</select></td>
 											<td>${m.enrolldate}</td>
 											<td><select id="status" name="status">
-													<option>${m.status}</option>
+													<option >${m.status}</option>
 													<option>
 														<c:choose>
 															<c:when test="${m.status == 'Y'}">N</c:when>
@@ -94,57 +91,53 @@
 														</c:choose>
 													</option>
 											</select></td>
-											<td><input type="button" value="수정"
-												onclick="updateAdmin(this);"></td>
+											<!--
+												<td><button onclick="updateAdmin(this);">수정</button></td>
+												<td><input type="submit" onclick="updateAdmin(this)" value="수정"></td>
+											-->
+												<td><input type="button" onclick="updateAdmin(this);" value="수정"></td>  
 										</tr>
 									</c:forEach>
 								</c:otherwise>
 							</c:choose>
 						</tbody>
 					</table>
-				</form>
 					<!-- 수정 스크립트 -->
 					<script>
-								function updateAdmin(upAdmin){
-									console.log($(upAdmin).closest('tr').find('td:first-child').text());
-									console.log($(upAdmin).closest('tr').find("#grade option:selected").val());
-									console.log($(upAdmin).closest('tr').find("#status option:selected").val());
-									
-									var updateNo = $(upAdmin).closest('tr').find('td:first-child').text(); //memberNo
-									var updateGrade = $(upAdmin).closest('tr').find("#grade option:selected").val(); //grade select 박스
-									var updateStatus = $(upAdmin).closest('tr').find("#status option:selected").val(); //status select 박스
-									
-									let f = document.createElement('form');
-									
-									let updateNo1;
-									updateNo1 = document.createElement('input');
-									updateNo1.setAttribute('type','hidden');
-									updateNo1.setAttribute('name','memberNo');
-									updateNo1.setAttribute('value',updateNo);
-									
-									let updateGrade2;
-									updateGrade2 = document.createElement('input');
-									updateGrade2.setAttribute('type','hidden');
-									updateGrade2.setAttribute('name','grade');
-									updateGrade2.setAttribute('value',updateGrade);
+						function updateAdmin(upAdmin) {
+							var updateNo = $(upAdmin).closest('tr').find('td:first-child').text(); //memberNo
+							var updateGrade = $(upAdmin).closest('tr').find("#grade option:selected").val(); //grade select 박스
+							var updateStatus = $(upAdmin).closest('tr').find("#status option:selected").val(); //status select 박스
+							
+							let f = document.createElement('form');
 
-									let updateStatus3;
-									updateStatus3 = document.createElement('input');
-									updateStatus3.setAttribute('type','hidden');
-									updateStatus3.setAttribute('name','status');
-									updateStatus3.setAttribute('value',updateStatus);
-									
-									f.appendChild(updateNo1);
-									f.appendChild(updateGrade2);
-									f.appendChild(updateStatus3);
-									f.setAttribute('method','post');
-									f.setAttribute('action','update.ad');
-									document.body.appendChild(f);
-									f.submit();
-										
-								}
-								
-							</script>
+							let updateNo1;
+							updateNo1 = document.createElement('input');
+							updateNo1.setAttribute('type', 'hidden');
+							updateNo1.setAttribute('name', 'memberNo');
+							updateNo1.setAttribute('value', updateNo);
+
+							let updateGrade2;
+							updateGrade2 = document.createElement('input');
+							updateGrade2.setAttribute('type', 'hidden');
+							updateGrade2.setAttribute('name', 'grade');
+							updateGrade2.setAttribute('value', updateGrade);
+
+							let updateStatus3;
+							updateStatus3 = document.createElement('input');
+							updateStatus3.setAttribute('type', 'hidden');
+							updateStatus3.setAttribute('name', 'status');
+							updateStatus3.setAttribute('value', updateStatus);
+
+							f.appendChild(updateNo1);
+							f.appendChild(updateGrade2);
+							f.appendChild(updateStatus3);
+							f.setAttribute('method', 'post');
+							f.setAttribute('action', 'update.ad');
+							document.body.appendChild(f);
+							f.submit();
+						}
+					</script>
 
 					<!-- 페이징바 -->
 					<div align="center">

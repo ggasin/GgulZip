@@ -51,24 +51,26 @@
 		   WHERE 
 	</entry>	
 	<entry key="selectDisable">  <!-- 정지회원 조회 -->
-	SELECT MEMBER_ID
-		  ,MEMBER_NAME
-		  ,MEMBER_EMAIL
-		  ,MEMBER_ENROLL_DATE
-		  ,DISABLE_REASON
-	 FROM MEMBER M,DISABLE D
-	WHERE M.MEMBER_NO = D.MEMBER_NO (+) AND STATUS = 'N'
+		SELECT M.MEMBER_NO 
+			  ,MEMBER_ID
+			  ,MEMBER_NAME
+			  ,MEMBER_EMAIL
+			  ,MEMBER_ENROLL_DATE
+			  ,DISABLE_REASON
+		 FROM MEMBER M,DISABLE D
+		WHERE M.MEMBER_NO = D.MEMBER_NO (+) AND STATUS = 'N'
 	</entry>
-	<entry key="insertDisable"> <!-- 정지회원 update (insert아님) -->
-	UPDATE DISABLE D
-	   SET D.DISABLE_REASON = ?
-	 WHERE D.MEMBER_NO IN 
-	(SELECT M.MEMBER_NO 
-	   FROM MEMBER M
-	  WHERE M.MEMBER_ID = ?)
+	<entry key="updateDisable">
+		UPDATE DISABLE D
+		   SET D.DISABLE_REASON = ?
+		 WHERE D.MEMBER_NO IN 
+		(SELECT M.MEMBER_NO 
+		   FROM MEMBER M
+		  WHERE M.MEMBER_NO = ?)
 	</entry>
 	<entry key="selectDisable2"> <!-- update후에 조회 -->
-		SELECT MEMBER_ID
+		SELECT M.MEMBER_NO 
+			  ,MEMBER_ID
 		      ,MEMBER_NAME
 		      ,MEMBER_EMAIL
 		      ,MEMBER_ENROLL_DATE
@@ -77,14 +79,18 @@
 			,DISABLE D
 	   WHERE M.MEMBER_NO = D.MEMBER_NO (+) 
 		 AND STATUS = 'N' 
-		 AND M.MEMBER_ID = ?
+		 AND M.MEMBER_NO = ?
 	</entry>
-	<entry key="insertDisable2">
+	<entry key="insertDisable">
 		INSERT INTO DISABLE (MEMBER_NO, DISABLE_REASON)
-		SELECT DISTINCT M.MEMBER_NO, '사유를 입력하세요'
+		SELECT DISTINCT M.MEMBER_NO, ' '
 		FROM MEMBER M
 		LEFT JOIN DISABLE D ON M.MEMBER_NO = D.MEMBER_NO
 		WHERE M.STATUS = 'N'
 		AND D.MEMBER_NO IS NULL
 	</entry>	
+	<entry key="deleteDisable">
+		DELETE FROM DISABLE 
+		 WHERE MEMBER_NO=?
+	</entry>
 </properties>

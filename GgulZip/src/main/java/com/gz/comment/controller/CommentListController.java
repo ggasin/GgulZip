@@ -36,10 +36,6 @@ public class CommentListController extends HttpServlet {
 	
 		ArrayList<Comment> clist = new PostService().selectCommentList(postNo);
 		
-		for(Comment c : clist) {
-			System.out.println(c);
-		}
-		
 		response.setContentType("application/json; charset=UTF-8");
 		
 		new Gson().toJson(clist, response.getWriter());

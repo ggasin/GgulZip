@@ -10,19 +10,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.gz.admin.model.service.AdminService;
-import com.gz.admin.model.vo.Disable;
+import com.gz.member.model.vo.Member;
 
 /**
- * Servlet implementation class DisableInsertController2
+ * Servlet implementation class DisableInsertController
  */
-@WebServlet("/insertDisable2")
-public class DisableInsertController2 extends HttpServlet {
+@WebServlet("/updateDisable.ad")
+public class DisableUpdateController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DisableInsertController2() {
+    public DisableUpdateController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,7 +31,6 @@ public class DisableInsertController2 extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
@@ -41,26 +40,30 @@ public class DisableInsertController2 extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
-		int MemberNo = Integer.parseInt(request.getParameter("memberNo"));
-		String reason = request.getParameter("reason");
+		//SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		
-		Disable dis = new Disable();
-		dis.setMemberNo(MemberNo);
-		dis.setReason(reason);
+		//정지회원 정지사유 추가 및 업데이트 후 조회 
+		int memberNo = Integer.parseInt(request.getParameter("memberNo2"));
+		String reason = request.getParameter("reason2");//정지사유
+
 		
-		int result = new AdminService().insertDisable2(dis);
+		Member d = new Member(memberNo,reason);
 		
-		HttpSession session = request.getSession();
+		int result = new AdminService().updateDisable(d);
+		
+		HttpSession session = request.getSession(); 
+		
 		
 		if(result>0) {
-			response.sendRedirect(request.getContextPath()+"/selectUser.ad?currentPage=1");
-			
+			session.setAttribute("alertMsg", "수정성공");
+			response.sendRedirect(request.getContextPath()+"/disable.ad");
 		}else {
-			session.setAttribute("errorMsg", "회원 정보 수정 성공");
-			response.sendRedirect(request.getContextPath()+"/selectUser.ad?currentPage=1");
+			request.setAttribute("errorMsg", "수정실패");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+
 			
 		}
-		
 	}
+
 
 }
