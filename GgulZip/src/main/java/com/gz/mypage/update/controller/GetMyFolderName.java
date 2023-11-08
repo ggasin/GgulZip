@@ -2,6 +2,7 @@ package com.gz.mypage.update.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,6 +29,7 @@ public class GetMyFolderName extends HttpServlet {
 		int mno = Integer.parseInt(request.getParameter("mno"));
 		System.out.println("inGetMyFolder");
 		ArrayList<Folder> list = new MoveService().selectFolderList(mno);
+		System.out.println(list);
 
 		//응답
 		response.setContentType("json/application; charset=UTF-8");

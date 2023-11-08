@@ -64,6 +64,11 @@ public class Folder {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
+	@Override
+	public String toString() {
+		return "Folder [folderNo=" + folderNo + ", postNo=" + postNo + ", userNo=" + userNo + ", folderName="
+				+ folderName + ", upFolderNo=" + upFolderNo + ", createDate=" + createDate + "]";
+	}
 	
 	
 	

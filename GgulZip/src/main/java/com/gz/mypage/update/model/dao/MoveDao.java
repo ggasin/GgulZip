@@ -49,7 +49,7 @@ private Properties prop = new Properties();
 		return list;
 	}
 	
-	//폴더/게시글 이동
+	//폴더/게시글 이동 folderNoArr, postNoArr은 이동하기로 선택된 폴더/게시글 목록
 	public int moveFolder(Connection conn, int mno,int targetFolderNo, String[] folderNoArr, String[] postNoArr) {
 		PreparedStatement pstmt = null;
 		int result = 1;
@@ -58,6 +58,19 @@ private Properties prop = new Properties();
 		String folderMoveSql = prop.getProperty("folderMove");
 		String postMoveSql = prop.getProperty("postMove");
 		
+		//db에 있는 내가 가진 folder 정보 조회
+		ArrayList<Folder> myFolderList = selectFolderList(conn,mno);
+		//내가 가진 folder번호들중 하나를 이동할 폴더번호로 입력했는지 확인. 없으면 0값 리턴
+		boolean isExistNo = false;
+		for(Folder f : myFolderList) {
+			if(targetFolderNo == f.getFolderNo()) {
+				isExistNo = true;
+				break;
+			}
+		}
+		System.out.println(isExistNo);
+		//내가 가진 폴더번호중 입력한게 아닌데 0도 아니라면(최상단) 0을 리턴해서 아래 구문을 실행시키지 않고 실패하도록
+		if((!isExistNo && targetFolderNo!=0)) return 0;
 		
 		
 		try {

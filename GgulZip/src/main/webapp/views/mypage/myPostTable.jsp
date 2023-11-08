@@ -54,6 +54,7 @@
 	</div>
 	<!------------------------내가 쓴 글 태그 관련 스크립트 시작------------------------------------>
 	<script>
+		//내가 쓴 글 탭 클릭 이벤트
 		$("#myPostTab").click(function(){   
 		    $.ajax({
 		        url: "myPostList.my",
@@ -77,7 +78,7 @@
 		        
 		        },
 		        error : function(){
-		            console.log("실패");
+		            console.log("내가 쓴 글 탭 클릭 이벤트 실패");
 		        }
 		    });
 		});
@@ -128,7 +129,7 @@
 							}
 						},
 						error : function(){
-							console.log("통신 실패");
+							console.log("내가 쓴 글 삭제 통신 실패");
 						}
 					});
 				} 
@@ -170,7 +171,7 @@
 								
 							},
 							error:function(){
-								console.log("통신 실패");
+								console.log("검색창 입력 이벤트 통신 실패");
 							}
 						});
 					}
@@ -187,7 +188,7 @@
                 var count = $("<td></td>").text(result[i].count);
                 var writer = $("<td></td>").text(result[i].writerNo);
                 var date = $("<td></td>").text(result[i].enrollDate);
-                tr.append(postNo,category,title,writer,count,date);
+                tr.append(postNo,category,title,count,writer,date);
                 $("#myPostTable>tbody").append(tr);
            	}
 		}

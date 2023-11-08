@@ -11,7 +11,7 @@
 		height:100%;
 		border-width: 0;
 	}
-	.myFolderNames {
+	#myFolderNames {
 		color:#000080; <!--네이비-->
 	}
 	.modal-title b{
@@ -97,7 +97,7 @@
 			      </div>
 			      <div class="modal-body">
 			      	<b>내 폴더 목록 [최상단으로 가려면 0입력]</b>
-			      	<p class="myFolderNames"></p>
+			      	<p id="myFolderNames"></p>
 			        <input type="text" id="moveFolderInput" placeholder="이동할 폴더의 번호 입력">
 			      </div>
 			      <div class="modal-footer">
@@ -138,7 +138,7 @@
 		            fList = result;
 		        },
 		        error : function(){
-		            console.log("실패");
+		            console.log("최상단 폴더 불러오기 실패");
 		        }
 		    });
 		    //최상단 게시글 불러오기
@@ -153,7 +153,7 @@
 		            pList = result;
 		        },
 		        error : function(){
-		            console.log("실패");
+		            console.log("최상단 게시글 불러오기 실패");
 		        }
 		    }); 
 		    //보여줄 폴더나 게시글이 존재한다면		
@@ -193,7 +193,7 @@
 		            fList = result;
 		        },
 		        error : function(){
-		            console.log("실패");
+		            console.log("하위폴더에 존재하는 폴더 구현 실패");
 		        }
 		        });
 		        //하위폴더에 존재하는 게시글 구현
@@ -210,7 +210,7 @@
 		                pList = result;
 		            },
 		            error : function(){
-		                console.log("실패");
+		                console.log("하위폴더에 존재하는 게시글 구현 실패");
 		            }
 		        }); 
 		        
@@ -250,7 +250,7 @@
  
 		            },
 		            error : function(){
-		                console.log("실패");
+		                console.log("분류가 게시판일때는 게시판 상세보기로 이동하도록 실패");
 		            }
 		        });
 		        
@@ -293,7 +293,7 @@
 		            }      
 		        },
 		        error : function(){
-		            console.log("실패");
+		            console.log("상위폴더 리스트 가져오기 실패");
 		        }
 		    });
 		    //상위폴더에 있는 게시글 가져오기
@@ -310,12 +310,14 @@
 		            pList = result;
 		        },
 		        error : function(){
-		            console.log("실패");
+		            console.log("상위폴더에 있는 게시글 가져오기 실패");
 		        }
 		    }); 
 		    
 		    //상위폴더로 갔을때 폴더나 게시글 둘중 하나라도 있다면
 		    if(fList.length != 0 || pList.length != 0){
+		    	//선택 버튼 없어졌을 경우 다시 보이도록
+		    	$('#interestChkBoxBtn').attr('style','display:block');
 		        //폴더를 눌렀을때 보여줄 폴더나 게시글이 존재한다면 테이블 비우고 다시 채우기
 		        resetTable();
 		        appendFolderToTable(fList);
@@ -379,7 +381,7 @@
 							}
 						},
 						error : function(){
-							console.log("통신 실패");
+							console.log("관심글 삭제 통신 실패");
 						}
 					});
 				}	
@@ -423,7 +425,7 @@
 								
 							},
 							error:function(){
-								
+								console.log("검색창 입력 이벤트");
 							}
 						});
 					}
@@ -449,9 +451,11 @@
 						}else {
 							alert("폴더 추가 실패");
 						}
+						//입력칸 초기화
+						$("#addFolderInput").val("");
 					},
 					error : function(){
-						
+						console.log("폴더 추가버튼 클릭 통신 에러");
 					}
 				
 				});
@@ -470,13 +474,18 @@
 				success : function(result){
 					var str = "";
 					for(var i=0; i<result.length;i++){
-						str+="["
+						if(i == result.length -1){
+							str+="["+result[i].folderName+"-"+result[i].folderNo+"]";
+						}else{
+							str+="["+result[i].folderName+"-"+result[i].folderNo+"],";
+						}
+						
 					}
 					
-					$("#output4 tbody").html(str);
+					$("#myFolderNames").html(str);
 				},
 				error : function(){
-					
+					console.log("폴더이동 모달창 클릭 통신 에러");
 				}
 				
 			});
@@ -500,8 +509,7 @@
 						postNoArr.push($(element).closest('tr').find('th:first-child').text());
 					}								
 				});
-				console.log(folderNoArr);
-				console.log(postNoArr);
+
 				$.ajax({
 					url : "moveFolder.my",
 					data : {
@@ -512,16 +520,22 @@
 					},
 					async : false,
 					success : function(result){
-						if(result == "success"){
+						console.log(result);
+						if(result == "NNNNY"){
 							alert("이동이 완료되었습니다.");
 							$("#interestPostTab").click();
 
-						}else{
+						}else if(result == "CONFLICT"){
+							alert("이동에 실패하였습니다.\n이동 대상 폴더와 이동되는 폴더의 번호가 일치합니다.");
+						} else{
 							alert("이동에 실패하였습니다. 존재하는 폴더 번호를 입력해주세요.");
 						}
+						
+						//입력칸 초기화
+						$("#moveFolderInput").val("");
 					},
 					error : function(){
-						
+						console.log("폴더/게시판 이동 통신 에러");
 					}
 				});
 			} else {

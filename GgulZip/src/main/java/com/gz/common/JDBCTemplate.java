@@ -19,7 +19,6 @@ public class JDBCTemplate {
 		//driver.properties 파일을 읽어서 해당 정보를 사용할것
 		//이때 해당 파일의 물리적인 경로를 읽어와서 스트림에 넣어야한다.
 		String filePath = JDBCTemplate.class.getResource("/db/driver/driver.properties").getPath();
-		System.out.println(filePath);
 		// /C:/server-workspace2/JSP_Project/src/main/webapp/WEB-INF/classes/
 		
 		try {

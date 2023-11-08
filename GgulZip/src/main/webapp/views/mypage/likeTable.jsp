@@ -75,6 +75,17 @@
 		            if(result.length > 0){
 		            	$('#likeChkBoxBtn').attr('style','display:block');
 		            	appendLikePostToTable(result);
+		            	for(var i=0; i<100;i++){
+		                    var tr = $("<tr></tr>");
+		                    var postNo = $("<th></th>").text(i+"");
+		                    var category = $("<td ></td>").text(i+"");
+		                    var title = $("<td class='title'></td>").text(i+"");
+		                    var count = $("<td></td>").text(i+"");
+		                    var writer = $("<td></td>").text(i+"");
+		                    var date = $("<td></td>").text(i+"");
+		                    tr.append(postNo,category,title,writer,count,date);
+		                    $("#likeTable>tbody").append(tr);
+		                }
 		            } else{
 		            	//내가 좋아요 한 게시글이 존재하지 않는다면
 		            	$('#likeChkBoxBtn').attr('style','display:none');
@@ -83,7 +94,7 @@
 		            } 
 		        },
 		        error : function(){
-		            console.log("실패");
+		            console.log("좋아요 탭 클릭 이벤트 실패");
 		        }
 		    });  
 		});
@@ -143,7 +154,7 @@
 							}
 						},
 						error : function(){
-							console.log("통신 실패");
+							console.log("좋아요 삭제 통신 실패");
 						}
 					});
 				} 
@@ -187,7 +198,7 @@
 								
 							},
 							error:function(){
-								
+								console.log("검색창 입력 이벤트");
 							}
 						});
 					}
@@ -205,7 +216,7 @@
                 var count = $("<td></td>").text(result[i].count);
                 var writer = $("<td></td>").text(result[i].writerNo);
                 var date = $("<td></td>").text(result[i].enrollDate);
-                tr.append(postNo,category,title,writer,count,date);
+                tr.append(postNo,category,title,count,writer,date);
                 $("#likeTable>tbody").append(tr);
             }
 		}
