@@ -130,7 +130,7 @@
 	<%@include file="/views/common/menubar.jsp" %>
 	<!-- 상위폴더로 -->
 
-	</div>
+
 	<div class="outer">
 		<br><br>
 		<div>
@@ -217,28 +217,32 @@
 			<br><br><br>
 		</div>
 		<div class="search_area">
-			<form method="get" action="${contextPath }/pSearch.po"> 
+			<form method="get" action="${contextPath }/pSearch.bo"> 
 				<select id="searchCondition" name="searchCondition">
 					<option value="title">제목</option>
 					<option value="content">내용</option>
 					<option value="nickname">닉네임</option>
 					<option value="titlecontent">제목+내용</option>
-				</select> <span class="input_area"> <input type="search"
+				</select> <span class="input_area"> <input type="search" id="searchValue"
 					name="searchValue">
 				</span>
 				<button type="submit">검색하기</button>
-					<!--c:if test 변수 보시고 수정해주세요-->
-				<c:if test="${ userLogin.userId eq 'admin' }">
-					<!--아래 작성하기 버튼 혹시 없으면 아래 경로 수정해주시고 있으면 지워주세요-->
-					<button type="button" onclick='location.href="${ contextPath }/notice/insert"'>작성하기</button> 
-				</c:if>
+				<c:choose>
+    				<c:when test="${empty listPost}">
+        				<tr>
+            				<td colspan="7">게시글이 없습니다</td>
+        				</tr>
+    				</c:when>
+    				<c:otherwise>
+        				<!-- 검색 결과를 나타내는 코드 -->
+        				<c:forEach items="${listPost}" var="p">
+            			<!-- 여기에 검색 결과를 표시하는 코드 추가 -->
+        				</c:forEach>
+    				</c:otherwise>
+				</c:choose>
 			</form>
-			<script>
-				function detailView(nno){ // 경로보고 아래 링크 수정해주세요
-					location.href = '${contextPath}/notice/detail?nno=' + nno;
-				}
-			</script>
-	</div>
+		</div>
+		
 	   <footer style="background-color:rgb(230, 230, 230)">
 		  <div class="inner">
 		  	<nav>

@@ -117,15 +117,15 @@ public class PostService {
 	        return result*result2;
 	    }
 
-			public ArrayList<Post> selectPost(String searchCondition, String searchValue) {
+		public ArrayList<Post> selectPost(String searchCondition, String searchValue) {
 				
-				Connection conn = JDBCTemplate.getConnection();
+			Connection conn = JDBCTemplate.getConnection();
 				
-				ArrayList<Post> listPost = new PostDao().selectPost(conn, searchCondition, searchValue);
+			ArrayList<Post> listPost = new PostDao().selectPost(conn, searchCondition, searchValue);
 				
-				JDBCTemplate.close(conn);
+			JDBCTemplate.close(conn);
 				
-				return listPost;
-			}
+			return listPost;
+		}
 			
-	 }
+	}

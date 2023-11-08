@@ -267,58 +267,52 @@ public class PostDao {
 	    }
 	   
 	   public ArrayList<Post> selectPost(Connection conn, String searchCondition, String searchValue) {
-			// searchCondition -> 검색 조건 searchValue -> 검색 값
-			PreparedStatement pstmt = null;
-			ResultSet rset = null;
-			ArrayList<Post> listPost = new ArrayList<Post>();
-			String sql = prop.getProperty("selectPost"); // 목록 조회
-			
-			if (searchCondition.equals("title")) { // 검색 조건이 제목
-				sql = prop.getProperty("selectTitlePost");
-			} else if (searchCondition.equals("content")) { // 검색 조건이 내용
-				sql = prop.getProperty("selectContentPost");
-			} else if (searchCondition.equals("nickname")) { // 검색 조건이 닉네임
-				sql = prop.getProperty("selectNicknamePost"); 
-			} else if (searchCondition.equals("title") || searchCondition.equals("content")) { // 검색 조건이 제목+내용
-				sql = prop.getProperty("selectTitleContentPost");
-			} 
-			
-			try {
-				pstmt = conn.prepareStatement(sql);
-				if (searchCondition.equals("title") || searchCondition.equals("content") || searchCondition.equals("nickname")) {
-					pstmt.setString(1, searchValue);
-				}
-				
-				rset = pstmt.executeQuery();
-				
-				while (rset.next()) {
-					listPost.add(new Post(
-								 rset.getInt("POST_NO")
-								,rset.getInt("CATEGORY_NO")
-								,rset.getString("%" + "TITLE" + "%")
-								,rset.getString("%" + "CONTENT" + "%")
-								,rset.getInt("COUNT")
-								,rset.getString("%" + "NICKNAME" + "%")
-								,rset.getDate("POST_DATE")
-								,rset.getInt("LIKE_COUNT")
-								,rset.getInt("INTEREST_COUNT")
-								,rset.getString("STATUS")
-							));
-				}
-				
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} finally {
-				JDBCTemplate.close(rset);
-				JDBCTemplate.close(pstmt);
-			}
-			
-				
-			
-			return listPost;
-		}
+		    PreparedStatement pstmt = null;
+		    ResultSet rset = null;
+		    ArrayList<Post> listPost = new ArrayList<Post>();
+		    String sql = prop.getProperty("selectPost"); // 목록 조회
 
+		    if (searchCondition.equals("title")) {
+		        sql = prop.getProperty("selectTitlePost");
+		    } else if (searchCondition.equals("content")) {
+		        sql = prop.getProperty("selectContentPost");
+		    } else if (searchCondition.equals("nickname")) {
+		        sql = prop.getProperty("selectNicknamePost");
+		    } else if (searchCondition.equals("titlecontent")) {
+		        sql = prop.getProperty("selectTitleContentPost");
+		    }
+
+		    try {
+		        pstmt = conn.prepareStatement(sql);
+		        if (searchCondition.equals("title") || searchCondition.equals("content") || searchCondition.equals("nickname")) {
+		            pstmt.setString(1, "%" + searchValue + "%");
+		        } else if (searchCondition.equals("titlecontent")) {
+		            pstmt.setString(1, "%" + searchValue + "%");
+		            pstmt.setString(2, "%" + searchValue + "%");
+		        }
+
+		        rset = pstmt.executeQuery();
+
+		        while (rset.next()) {
+		            listPost.add(new Post(
+		                rset.getInt("POST_NO"),
+		                rset.getString("CATEGORY_NAME"),
+		                rset.getString("TITLE"),
+		                rset.getString("CONTENT"),
+		                rset.getInt("COUNT"),
+		                rset.getString("MEMBER_NICKNAME"),
+		                rset.getDate("POST_DATE")
+		            ));
+		        }
+
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    } finally {
+		        JDBCTemplate.close(rset);
+		        JDBCTemplate.close(pstmt);
+		    }
+
+		    return listPost;
+		}
 	}
 
