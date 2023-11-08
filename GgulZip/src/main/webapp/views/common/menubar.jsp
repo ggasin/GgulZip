@@ -196,25 +196,23 @@ if (cookies != null) {
 <body>
 	<!--jstl 방식으로 contextPath를 다시 선언해주어야 jstl방식으로 contextPath를 이용해야한다. -->
 	<c:set var="contextPath" value="${pageContext.request.contextPath }" />
+	<!-- 회원 탈퇴시 받을 메시지 확인 -->
+	<c:if test="${not empty sessionScope.deleteMemAlert}">
+    	<script>
+    		alert("${sessionScope.deleteMemAlert}");
+    		<c:remove var="deleteMemAlert" scope="session" />
+    	</script>
+    </c:if>
+	
 	<script>
-		// script 내부에도 스크립틀릿과 같은 jsp요소를 쓸 수 있다.
-		// 주의사항 : jsp가 먼저 읽히기 때문에 javascript 값을 java에 담을 수는 없다 (반대는 가능)
-			
+
 		var msg = '<%=alertMsg%>'; //이건 가능 (문자열 처리해주기[값자체로 나옴])
 		
-		//안되는것 : 자바스크립트에서 작성한것을 jsp(java)로 넘기기 
-		/*
-		var a = 10;
-		
-		<%//int ab = a;%>
-		*/
-		if(msg != 'null'){ //alertMsg가 null인경우 자바스크립트에 담길때 문자열이 되기때문에
-						   //비교도 문자열로 비교해야함.
+
+		if(msg != 'null'){ 
 			alert(msg);
-			//alertMsg를 session에서 지워주지않으면 계속 메세지가 나오기때문에 한번 띄우고 지우기 
 			<%session.removeAttribute("alertMsg");%>
-			
-		}
+		}		
 		
 		$(function(){
 			

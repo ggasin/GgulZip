@@ -26,9 +26,7 @@ public class FolderAddController extends HttpServlet {
 		int mno = Integer.parseInt(request.getParameter("mno"));
 		String folderName = request.getParameter("folderName");
 		int currentFolderNo = Integer.parseInt(request.getParameter("currentFolderNo"));
-		System.out.println(mno);
-		System.out.println(folderName);
-		System.out.println(currentFolderNo);
+		
 		int result = new InterestService().addFolder(mno,folderName,currentFolderNo);
 		if(result > 0) {
 			response.getWriter().print("success");

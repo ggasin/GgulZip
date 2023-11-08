@@ -8,9 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.tribes.util.Arrays;
-
-import com.gz.mypage.update.model.service.MyCommentDeleteService;
+import com.gz.mypage.update.model.service.DeleteService;
 
 
 @WebServlet("/myCommentDelete.my")
@@ -28,7 +26,7 @@ public class MyCommentDeleteController extends HttpServlet {
 		int mno = Integer.parseInt(request.getParameter("mno"));
 		String[] commentNoArr = request.getParameterValues("commentNoArr[]");
 		
-		int result = new MyCommentDeleteService().deleteLike(mno,commentNoArr);
+		int result = new DeleteService().deleteMyComment(mno,commentNoArr);
 		
 		response.setContentType("text/html; charset=UTF-8");
 		if(result > 0) {

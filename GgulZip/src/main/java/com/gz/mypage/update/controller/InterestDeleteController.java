@@ -8,9 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.tribes.util.Arrays;
-
-import com.gz.mypage.update.model.service.InterestDeleteService;
+import com.gz.mypage.update.model.service.DeleteService;
 
 
 @WebServlet("/interestDelete.my")
@@ -28,10 +26,9 @@ public class InterestDeleteController extends HttpServlet {
 		int mno = Integer.parseInt(request.getParameter("mno"));
 		String[] folderNoArr = request.getParameterValues("folderNoArr[]");
 		String[] postNoArr = request.getParameterValues("postNoArr[]");
-		System.out.println(Arrays.toString(folderNoArr));
-		System.out.println(Arrays.toString(postNoArr));
+
 		
-		int result = new InterestDeleteService().deleteInterest(mno,folderNoArr,postNoArr);
+		int result = new DeleteService().deleteInterest(mno,folderNoArr,postNoArr);
 		
 		response.setContentType("text/html; charset=UTF-8");
 		if(result > 0) {

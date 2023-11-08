@@ -273,4 +273,45 @@
              WHERE MEMBER_ID = ?
              AND STATUS = 'Y'
 	</entry>
+	<!--id로 유저 정보 가져오기 -->
+	<entry key="selectMember">
+		SELECT *
+		FROM MEMBER
+		WHERE MEMBER_ID = ?
+		AND STATUS = 'Y'
+	</entry>
+	<!-- 비밀번호 변경 -->
+	<entry key="updatePwd">
+		UPDATE MEMBER SET MEMBER_PWD = ?
+		WHERE MEMBER_PWD = ?
+		AND MEMBER_NO = ?
+		AND STATUS = 'Y'
+	</entry>
+	<!-- 회원 탈퇴 -->
+	<entry key="deleteMember">
+		UPDATE MEMBER SET STATUS = 'N'
+		WHERE MEMBER_NO = ?
+		AND MEMBER_PWD = ?
+		AND STATUS = 'Y'
+	</entry>
+	
+	<!-- 내가 갖고있는 폴더들 이름 가져오기 -->
+	<entry key="selectMyFolders">
+		SELECT FOLDER_NAME,FOLDER_NO
+		FROM FOLDER
+		WHERE MEMBER_NO = ?
+	</entry>
+	<!-- 관심 폴더 이동시키기 -->
+	<entry key="folderMove">
+		UPDATE FOLDER SET UP_FOLDER_NO = ?
+		WHERE MEMBER_NO = ?
+		AND FOLDER_NO = ?
+		
+	</entry>
+	<!-- 관심 게시글 이동시키기 -->
+	<entry key="postMove">
+		UPDATE INTEREST_POST SET FOLDER_NO = ?
+		WHERE MEMBER_NO = ?
+		AND POST_NO = ?
+	</entry>
 </properties>

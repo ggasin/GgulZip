@@ -7,7 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.gz.member.model.vo.Member;
 import com.gz.mypage.update.model.service.MemberUpdateService;
 
 
@@ -33,13 +35,17 @@ public class MemberUpdateController extends HttpServlet {
 		String userNickName = request.getParameter("userNickName");
 		String email = request.getParameter("email");
 		
-		int result = new MemberUpdateService().updateMember(userId,userName,userNickName,email);
-		if(result > 0) {
-			request.setAttribute("alertMsg", "정보 수정이 완료되었습니다.");
-			request.getRequestDispatcher("views/mypage/myPage.jsp").forward(request, response);
+		//업데이트 된 멤버
+		Member m = new MemberUpdateService().updateMember(userId,userName,userNickName,email);
+		HttpSession session = request.getSession();
+		if(m !=  null) {
+			
+			session.setAttribute("loginMember",m);
+			session.setAttribute("myAlertMsg", "정보 수정이 완료되었습니다.");
+			response.sendRedirect(request.getContextPath()+"/myPage.me");
 		}else {
-			request.setAttribute("alertMsg", "정보 수정을 실패했습니다.");
-			request.getRequestDispatcher("views/mypage/myPage.jsp").forward(request, response);
+			session.setAttribute("myAlertMsg", "정보 수정을 실패했습니다.");
+			response.sendRedirect(request.getContextPath()+"/myPage.me");
 		}
 	}
 

@@ -22,6 +22,12 @@ public class Folder {
 		this.upFolderNo = upFolderNo;
 		this.createDate = createDate;
 	}
+	
+	public Folder(int folderNo, String folderName) {
+		super();
+		this.folderNo = folderNo;
+		this.folderName = folderName;
+	}
 	public int getFolderNo() {
 		return folderNo;
 	}

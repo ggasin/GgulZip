@@ -8,9 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.tribes.util.Arrays;
-
-import com.gz.mypage.update.model.service.LikeDeleteService;
+import com.gz.mypage.update.model.service.DeleteService;
 
 
 @WebServlet("/likeDelete.my")
@@ -27,9 +25,9 @@ public class LikeDeleteController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int mno = Integer.parseInt(request.getParameter("mno"));
 		String[] postNoArr = request.getParameterValues("postNoArr[]");
-		System.out.println(Arrays.toString(postNoArr));
 		
-		int result = new LikeDeleteService().deleteLike(mno,postNoArr);
+		
+		int result = new DeleteService().deleteLike(mno,postNoArr);
 		
 		response.setContentType("text/html; charset=UTF-8");
 		if(result > 0) {
