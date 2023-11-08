@@ -189,7 +189,10 @@ if (cookies != null) {
 	  background-color: #c9cac9;
 	}
 	
-
+	a{
+		padding: 0.5rem 0rem 0.5rem 0.5rem;
+	}
+	
 </style>
 
 </head>
@@ -304,47 +307,37 @@ if (cookies != null) {
 	</div>
 
 	<div class="container nav_main text-center" style="padding-top: 10px;">
-	  <!-- 1번 메뉴 링크 -->
-	  <div class="nav_item">
-	    <a href="#">공지사항</a>
-	  </div>
-	
-	  <div class="dropdown_king nav_item">
-	    <a href="#">게시판</a>
-	    <div class="dropdown_main">
-	      <a href="${pageContext.request.contextPath}/list.bo?currentPage=1">
-	        <div>
-	        	추천게시판
-	        </div>
-	      </a>
-	      <a href="#">
-	        <div>
-	        	자유게시판
-	        </div>
-	      </a>
-	      <a href="#">
-	        <div>
-	        	꿀팁게시판
-	        </div>
-	      </a>
-	    </div>
-	  </div>
+		<!-- 1번 메뉴 링크 -->
+		<div class="nav_item">
+			<a href="#">공지사항</a>
+		</div>
 
-	  <div class="nav_item">
-	    <a href="#">신고/건의</a>
-	  </div>
-	  <div class="nav_item">
-			<a href="${contextPath}/disable.ad">정지회원</a>
+		<div class="dropdown_king nav_item">
+			<a href="#">게시판</a>
+			<div class="dropdown_main">
+				<a href="${pageContext.request.contextPath}/list.bo?currentPage=1">
+					추천게시판
+				</a> <a href="#">
+					자유게시판
+				</a> <a href="#">
+					꿀팁게시판
+				</a>
+			</div>
 		</div>
-		 <div class="nav_item">
-			<a href="${contextPath}/category.ad">카테고리수정</a>
+		<div class="dropdown_king nav_item">
+			<a href="#">관리자</a>
+			<div class="dropdown_main">
+				<a href="${contextPath}/selectUser.ad?currentPage=1">
+					관리자페이지
+				</a> 
+				<a href="${contextPath}/category.ad">
+					카테고리
+				</a> <a href="${contextPath}/disable.ad">
+					정지회원
+				</a>
+			</div>
 		</div>
-		 <div class="nav_item">
-			<a href="${contextPath}/selectUser.ad?currentPage=1">관리자페이지</a>
-		</div>
-	  
 	</div>
-
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {
 			const boardMenu = document.getElementById('boardMenu');
