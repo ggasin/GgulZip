@@ -269,7 +269,7 @@ public class PostDao {
 	   public ArrayList<Post> selectPost(Connection conn, String searchCondition, String searchValue) {
 		    PreparedStatement pstmt = null;
 		    ResultSet rset = null;
-		    ArrayList<Post> listPost = new ArrayList<Post>();
+		    ArrayList<Post> list = new ArrayList<Post>();
 		    String sql = prop.getProperty("selectPost"); // 목록 조회
 
 		    if (searchCondition.equals("title")) {
@@ -294,7 +294,7 @@ public class PostDao {
 		        rset = pstmt.executeQuery();
 
 		        while (rset.next()) {
-		            listPost.add(new Post(
+		                list.add(new Post(
 		                rset.getInt("POST_NO"),
 		                rset.getString("CATEGORY_NAME"),
 		                rset.getString("TITLE"),
@@ -312,7 +312,7 @@ public class PostDao {
 		        JDBCTemplate.close(pstmt);
 		    }
 
-		    return listPost;
+		    return list;
 		}
 	}
 

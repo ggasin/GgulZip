@@ -227,19 +227,6 @@
 					name="searchValue">
 				</span>
 				<button type="submit">검색하기</button>
-				<c:choose>
-    				<c:when test="${empty listPost}">
-        				<tr>
-            				<td colspan="7">게시글이 없습니다</td>
-        				</tr>
-    				</c:when>
-    				<c:otherwise>
-        				<!-- 검색 결과를 나타내는 코드 -->
-        				<c:forEach items="${listPost}" var="p">
-            			<!-- 여기에 검색 결과를 표시하는 코드 추가 -->
-        				</c:forEach>
-    				</c:otherwise>
-				</c:choose>
 			</form>
 		</div>
 		

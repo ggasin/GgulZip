@@ -33,16 +33,15 @@ public class PostSearchController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Post> listPost;
+		ArrayList<Post> list;
 		String searchCondition = request.getParameter("searchCondition"); // 검색 조건
 		String searchValue = request.getParameter("searchValue"); // 검색 값
 		// 검색 결과
-		listPost = new PostService().selectPost(searchCondition, searchValue);
-		
-		if (listPost != null) {
-			request.setAttribute("listPost", listPost);
-			request.getRequestDispatcher("/views/post/postListView.jsp").forward(request, response);;
-		}
+		list = new PostService().selectPost(searchCondition, searchValue);
+
+		request.setAttribute("list", list);
+		request.getRequestDispatcher("/views/post/postListView.jsp").forward(request, response);;
+
 		
 		
 	}

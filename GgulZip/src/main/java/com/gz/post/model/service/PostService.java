@@ -121,11 +121,11 @@ public class PostService {
 				
 			Connection conn = JDBCTemplate.getConnection();
 				
-			ArrayList<Post> listPost = new PostDao().selectPost(conn, searchCondition, searchValue);
+			ArrayList<Post> list = new PostDao().selectPost(conn, searchCondition, searchValue);
 				
 			JDBCTemplate.close(conn);
 				
-			return listPost;
+			return list;
 		}
 			
 	}
